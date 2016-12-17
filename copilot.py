@@ -55,8 +55,8 @@ def on_message(client, userdata, msg):
     if msg.topic == "acop/engine" :
         if(jsonMsg['deviceID']==deviceID):
             print("Message Received this Device " + jsonMsg['ctype'] + " " + jsonMsg['cvalue'])
-            engine = EngineAction(fg, jsonMsg['ctype'], jsonMsg['cvalue'])
-            engine.execute_action()
+            fg.set_engine_action(jsonMsg['ctype'], jsonMsg['cvalue'])
+            fg.engine.execute_action()
 
 deviceID = "DEVICE_1"
 appID = "APP_1"
@@ -67,11 +67,11 @@ client.on_connect = on_connect
 client.on_subscribe = on_subscribe
 client.on_message = on_message
 
-broker_local = "127.0.0.1"
+broker_local = "192.168.1.11"
 fg_sim_ip = "127.0.0.1"
 broker_net = "broker.mqttdashboard.com"
 
-client.connect(broker_net, 1883)
+client.connect(broker_local, 1883)
 client.subscribe("acop/engine", qos=0)
 packet = Payload(deviceID,appID)
 client.loop_start()
@@ -92,6 +92,7 @@ def main():
     if test_run == 0:
         print "Running"
         while True:
+            running = True;
             time.sleep(1)
     else:
         # parking brake on

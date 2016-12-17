@@ -36,10 +36,10 @@ client.on_connect = on_connect
 client.on_subscribe = on_subscribe
 client.on_message = on_message
 
-broker_local = "127.0.0.1"
+broker_local = "192.168.1.11"
 broker_net = "broker.mqttdashboard.com"
 
-client.connect(broker_net, 1883)
+client.connect(broker_local, 1883)
 client.subscribe("acop/status", qos=0)
 packet = Payload(deviceID,appID)
 
@@ -74,11 +74,16 @@ def change_engine_params(throttle, mixture, prime):
 	client.loop()
 	return statement(speech_text).simple_card('CopilotResponse', speech_text)
 
-
+@ask.intent('AutoStartIntent')
+def autostart():
+	packet.setType("autostart", "true")
+	speech_text = 'starting engines captain'
+	client.publish("acop/engine", json.dumps(packet.__dict__), qos=0)
+	return statement(speech_text).simple_card('CopilotResponse', speech_text)
 
 @ask.intent('AMAZON.HelpIntent')
 def help():
-    speech_text = 'You can say hello to me!'
+    speech_text = 'trust me captain, we will not crash'
     return question(speech_text).reprompt(speech_text).simple_card('CopilotResponse', speech_text)
 
 

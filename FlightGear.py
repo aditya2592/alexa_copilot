@@ -15,13 +15,39 @@ class EngineAction:
         self.ctype = ctype
         self.cvalue = cvalue
 
+    def prime_engine(self, count):
+        self.fg.set_bool('/controls/engines/engine/use-primer', 0)
+        self.fg.set_double('/controls/engines/engine/primer', 0)
+
+        for num in range(0, count) :    
+            engine_path = '/controls/engines/engine/primer-lever'
+            self.fg.set_bool(engine_path,1)
+            self.fg.set_bool(engine_path,0)
+
+    def auto_start_sequence (self):
+        self.fg.set_bool('/controls/electric/external-power', 0)
+        self.fg.set_double('/controls/engines/current-engine/throttle', 0)
+        self.fg.set_double('/controls/engines/current-engine/mixture', 0)
+
+        self.fg.set_bool('/controls/switches/starter', 1)
+        self.prime_engine(5)
+
+        self.fg.set_double('/controls/engines/current-engine/mixture', 1)
+        self.fg.set_double('/controls/engines/current-engine/throttle', 0.2)
+
+        self.fg.set_int('/controls/switches/magnetos', 3)
+        self.fg.set_bool('/controls/electric/external-power', 1)
+
+
     def execute_action(self):
         if self.ctype == "throttle":
             self.fg.set_double('/controls/engines/current-engine/throttle', float(self.cvalue)/100);
         elif self.ctype == "mixture":
             self.g.set_double('/controls/engines/current-engine/mixture', float(self.cvalue)/100);
         elif self.ctype == "prime":
-            self.fg.prime_engine(int(self.cvalue))
+            self.prime_engine(int(self.cvalue))
+        elif self.ctype == "autostart" and self.cvalue == "true":
+            self.auto_start_sequence()
         else :
             print("Uncoded instruction")
 
@@ -180,11 +206,11 @@ class FlightGear:
         if self.telnet:
             self.telnet.quit()
             self.telnet = None
-    def prime_engine(self, count):
-        for num in range(0, count) :    
-            engine_path = '/controls/engines/engine/primer-lever'
-            self.set_bool(engine_path,1)
-            self.set_bool(engine_path,0)
+
+
+
+    def set_engine_action(self,ctype,cvalue):
+        self.engine = EngineAction(self,ctype,cvalue);
 
     def view_next(self):
         #move to next view
