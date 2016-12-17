@@ -5,10 +5,11 @@ Alexa Copilot for FlightGear flight simulator. Fly planes using voice commands
 Code based on Python library developed by FG on Telnet Usage Wiki - https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/scripts/python/
 
 # Setting up Alexa Skill
-Follow tutorial for flask-ask and ngrock - https://www.youtube.com/watch?v=cXL8FDUag-s
+Follow tutorial for flask-ask and ngrok - https://www.youtube.com/watch?v=cXL8FDUag-s
+To start ngrok - ngrok http 5000
 
 # Setting up communication between skill and FG interface
-Use Hive MQTT and Paho python MQTT client
+Use Hive MQTT and Paho python MQTT client - https://eclipse.org/paho/clients/python/
 
 # Testing everything
 Install Alexa on Mac/Pi using https://github.com/alexa/alexa-avs-sample-app/wiki/Linux

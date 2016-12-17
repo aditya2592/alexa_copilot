@@ -1,6 +1,7 @@
 import logging
 import json
 import paho.mqtt.client as paho
+from Payload import Payload
 
 from flask import Flask
 from flask_ask import Ask, request, session, question, statement
@@ -12,7 +13,7 @@ def on_connect(client, userdata, rc):
     client.subscribe("$SYS/#")
 
 def on_publish(client, userdata, mid):
-    print("published : "+str(mid) + " " + userdata)
+    print("published : "+str(mid) + " " + str(userdata))
  
 def cleanAndExit():
     print "Cleaning..."
@@ -25,23 +26,11 @@ def on_subscribe(client, userdata, mid, granted_qos):
  
 def on_message(client, userdata, msg):
     jsonMsg = json.loads(str(msg.payload))
-    if(jsonMsg['deviceID']==deviceID):
-        print("This Device")
-    print(jsonMsg['deviceID']) 
+  
 
-class Payload:
-    deviceID = ""
-    appID = ""
-    type = ""
-    value = ""
-    def __init__(self, deviceID, appID):
-        self.deviceID = deviceID
-        self.appID = appID
-    def setType(self, type, value):
-        self.type = type
-        self.value = value
-        
-client = paho.Client(client_id="device_1")
+deviceID = "DEVICE_1"
+appID = "APP_1"      
+client = paho.Client(client_id=appID)
 client.on_publish = on_publish
 client.on_connect = on_connect
 client.on_subscribe = on_subscribe
@@ -51,9 +40,7 @@ broker_local = "127.0.0.1"
 broker_net = "broker.mqttdashboard.com"
 
 client.connect(broker_net, 1883)
-#client.subscribe("acop/status", qos=0)
-deviceID = "DEVICE_1"
-appID = "APP_1"
+client.subscribe("acop/status", qos=0)
 packet = Payload(deviceID,appID)
 
 
@@ -84,6 +71,7 @@ def change_engine_params(throttle, mixture, prime):
 		speech_text = "sorry I dont understand this instruction"
 
 	client.publish("acop/engine", json.dumps(packet.__dict__), qos=0)
+	client.loop()
 	return statement(speech_text).simple_card('CopilotResponse', speech_text)
 
 
