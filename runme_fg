@@ -1,1 +1,1 @@
-fgfs --telnet=5401
+fgfs --telnet=5401 --timeofday={noon} --airport=SSFF --runway=02

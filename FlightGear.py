@@ -9,6 +9,22 @@ __all__ = ["FlightGear"]
 
 CRLF = '\r\n'
 
+class EngineAction:
+    def __init__(self,fg,ctype,cvalue):
+        self.fg = fg
+        self.ctype = ctype
+        self.cvalue = cvalue
+
+    def execute_action(self):
+        if self.ctype == "throttle":
+            self.fg.set_double('/controls/engines/current-engine/throttle', float(self.cvalue)/100);
+        elif self.ctype == "mixture":
+            self.g.set_double('/controls/engines/current-engine/mixture', float(self.cvalue)/100);
+        elif self.ctype == "prime":
+            self.fg.prime_engine(int(self.cvalue))
+        else :
+            print("Uncoded instruction")
+
 class FGTelnet(Telnet):
     def __init__(self,host,port):
         Telnet.__init__(self,host,port)
@@ -59,6 +75,16 @@ class FGTelnet(Telnet):
     def setb(self,var,value):
         """Set variable to a new value"""
         self._putcmd('setb %s %s' % (var,value))
+        self._getresp() # Discard response
+
+    def setd(self,var,value):
+        """Set variable to a new value"""
+        self._putcmd('setd %s %s' % (var,value))
+        self._getresp() # Discard response
+
+    def seti(self,var,value):
+        """Set variable to a new value"""
+        self._putcmd('seti %s %s' % (var,value))
         self._getresp() # Discard response
 
     def quit(self):
@@ -142,11 +168,23 @@ class FlightGear:
 
     def set_bool (self, path, value):
         self.telnet.setb(path, value)
+
+    def set_double (self, path, value):
+        self.telnet.setd(path, value)
+
+    def set_int (self, path, value):
+        self.telnet.seti(path, value)
+
     def quit(self):
         """Close the telnet connection to FlightGear."""
         if self.telnet:
             self.telnet.quit()
             self.telnet = None
+    def prime_engine(self, count):
+        for num in range(0, count) :    
+            engine_path = '/controls/engines/engine/primer-lever'
+            self.set_bool(engine_path,1)
+            self.set_bool(engine_path,0)
 
     def view_next(self):
         #move to next view

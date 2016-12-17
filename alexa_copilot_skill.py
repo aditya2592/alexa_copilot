@@ -59,13 +59,13 @@ def launch():
     mapping={'throttle': 'THROTTLE', 'mixture': 'MIXTURE', 'prime' : 'PRIME'})
 def change_engine_params(throttle, mixture, prime):
 	if throttle is not None:
-		packet.setType("engine/throttle", throttle)
+		packet.setType("throttle", throttle)
 		speech_text = 'setting throttle to %s percent' % throttle
 	elif mixture is not None:
-		packet.setType("engine/mixture", mixture)
+		packet.setType("mixture", mixture)
 		speech_text = 'setting mixture level to %s percent' % mixture
 	elif prime is not None:
-		packet.setType("engine/prime", prime)
+		packet.setType("prime", prime)
 		speech_text = 'priming engine %s times' % prime
 	else :
 		speech_text = "sorry I dont understand this instruction"

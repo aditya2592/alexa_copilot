@@ -1,4 +1,4 @@
-from FlightGear import FlightGear
+from FlightGear import FlightGear, EngineAction
 import time
 import json
 import paho.mqtt.client as paho
@@ -52,9 +52,11 @@ def on_message(client, userdata, msg):
     #print(str(jsonMsg['deviceID']))
     print("Test")
     print("Message Received this Device " + str(msg.payload))
-    if(jsonMsg['deviceID']==deviceID):
-        if msg.topic == "acop/engine" :
+    if msg.topic == "acop/engine" :
+        if(jsonMsg['deviceID']==deviceID):
             print("Message Received this Device " + jsonMsg['ctype'] + " " + jsonMsg['cvalue'])
+            engine = EngineAction(fg, jsonMsg['ctype'], jsonMsg['cvalue'])
+            engine.execute_action()
 
 deviceID = "DEVICE_1"
 appID = "APP_1"
@@ -74,8 +76,9 @@ client.subscribe("acop/engine", qos=0)
 packet = Payload(deviceID,appID)
 client.loop_start()
 
+fg = FlightGear(fg_sim_ip, 5401)
+
 def main():
-    fg = FlightGear(fg_sim_ip, 5401)
 
     print "Running"
     # Wait five seconds for simulator to settle down
