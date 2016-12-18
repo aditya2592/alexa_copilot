@@ -69,7 +69,7 @@ client.on_connect = on_connect
 client.on_subscribe = on_subscribe
 client.on_message = on_message
 
-broker_local = "192.168.1.11"
+broker_local = "127.0.0.1"
 fg_sim_ip = "127.0.0.1"
 broker_net = "broker.mqttdashboard.com"
 
