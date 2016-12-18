@@ -1,0 +1,6 @@
+EngineIntent throttle the engine to {THROTTLE} percent
+EngineIntent set the throttle to {THROTTLE} percent
+EngineIntent push the mixture to {MIXTURE} percent
+EngineIntent set the mixture to {MIXTURE} percent
+EngineIntent prime the engine {PRIME} times
+AutoStartIntent start the engine

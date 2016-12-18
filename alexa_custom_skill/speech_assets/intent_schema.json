@@ -1,0 +1,33 @@
+{
+  "intents": [
+    {
+      "intent": "EngineIntent",
+      "slots": [
+        {
+          "name": "THROTTLE",
+          "type": "LIST_OF_THROTTLE_VALS"
+        },
+        {
+          "name": "MIXTURE",
+          "type": "LIST_OF_MIXTURE_VALS"
+        },
+        {
+          "name": "PRIME",
+          "type": "LIST_OF_PRIME_VALS"
+        }
+      ]
+    },
+    {
+      "intent": "AutoStartIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}

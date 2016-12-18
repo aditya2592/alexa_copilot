@@ -1,0 +1,4 @@
+LIST_OF_MIXTURE_VALS	0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100
+LIST_OF_PRIME_VALS	1 | 2 | 3 | 4 | 5 | 6
+LIST_OF_THROTTLE_VALS	0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100
+LIST_OF_AUTOSTART_VALS	true | false
