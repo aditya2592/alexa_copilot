@@ -1,17 +1,10 @@
 # Alexa Copilot
-Alexa Copilot for FlightGear flight simulator. Fly planes using voice commands
+Alexa Copilot is a voice controlled copilot for FlightGear flight simulator. The aim is to fully automate the tasks typically performed by copilot and reduce pilot's workload so that he/she can focus on flying. 
 
-# Interfacing to FG using Telnet
-Code based on Python library developed by FG on Telnet Usage Wiki - https://sourceforge.net/p/flightgear/flightgear/ci/next/tree/scripts/python/
+# Setup Instructions
+Please follow our [setup wiki](https://github.com/aditya2592/alexa_copilot/wiki) to setup Alexa Copilot on your Linux/Mac machine. Since the code is based on Python and FlightGear it should work on Windows as well but it has't been tested.
 
-# Setting up Alexa Skill
-Follow tutorial for flask-ask and ngrok - https://www.youtube.com/watch?v=cXL8FDUag-s
-To start ngrok - ngrok http 5000
-
-# Setting up communication between skill and FG interface
-Use Hive MQTT and Paho python MQTT client - https://eclipse.org/paho/clients/python/
-
-# Testing everything
+# Running Alexa Copilot
 Install Alexa on Mac/Pi using https://github.com/alexa/alexa-avs-sample-app/wiki/Linux
 Start the Node JS server to communicated with Alexa
 Start Companion App to use Alexa App
