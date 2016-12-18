@@ -2,6 +2,8 @@ from FlightGear import FlightGear, EngineAction
 import time
 import json
 import paho.mqtt.client as paho
+import os, sys, inspect
+sys.path.append( os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/../modules/" )
 from Payload import Payload
 
 

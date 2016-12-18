@@ -1,6 +1,9 @@
 import logging
 import json
 import paho.mqtt.client as paho
+import sys
+import os, sys, inspect
+sys.path.append( os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/../modules/" )
 from Payload import Payload
 
 from flask import Flask
