@@ -5,7 +5,4 @@ Alexa Copilot is a voice controlled copilot for FlightGear flight simulator. The
 Please follow our [setup wiki](https://github.com/aditya2592/alexa_copilot/wiki) to setup Alexa Copilot on your Linux/Mac machine. Since the code is based on Python and FlightGear it should work on Windows as well but it has't been tested.
 
 # Running Alexa Copilot
-Install Alexa on Mac/Pi using https://github.com/alexa/alexa-avs-sample-app/wiki/Linux
-Start the Node JS server to communicated with Alexa
-Start Companion App to use Alexa App
-Following needed to be added to pom.xml in the javaClient - <argument>-Djna.library.path=/Applications/VLC.app/Contents/MacOS/lib/</argument>
+Please follow our wiki to run Alexa Copilot. Current implementation supports autostart of engines, priming, throttle and mixture level change in FlightGear for the Cesna 172P Skyhawk aircraft. We are working to add more controls.
