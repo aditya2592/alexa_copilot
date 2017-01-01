@@ -5,7 +5,7 @@ import sys
 import os, sys, inspect
 sys.path.append( os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/../modules/" )
 from Payload import Payload
-
+from socket import error as socket_error
 from flask import Flask
 from flask_ask import Ask, request, session, question, statement
 
@@ -30,6 +30,8 @@ def on_subscribe(client, userdata, mid, granted_qos):
 def on_message(client, userdata, msg):
     jsonMsg = json.loads(str(msg.payload))
   
+def on_disconnect(client, userdata, rc):
+	print "Disconnected"
 
 deviceID = "DEVICE_1"
 appID = "APP_1"      
@@ -38,11 +40,16 @@ client.on_publish = on_publish
 client.on_connect = on_connect
 client.on_subscribe = on_subscribe
 client.on_message = on_message
+client.on_disconnect = on_disconnect
 
 broker_local = "127.0.0.1"
 broker_net = "broker.mqttdashboard.com"
 
-client.connect(broker_local, 1883)
+try :
+	client.connect(broker_local, 1883)
+except socket_error as serr:
+	print "Could not connect to MQTT"
+	
 client.subscribe("acop/status", qos=0)
 packet = Payload(deviceID,appID)
 
